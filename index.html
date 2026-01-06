@@ -4,37 +4,107 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TE AMO 🩵</title>
+
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    background: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  h1 {
-    color: #fff;
-    font-size: 6rem;
+body {
+  height: 100vh;
+  background: black;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+/* ✍️ Texto */
+#texto {
+  color: white;
+  font-size: 3rem;
+  text-align: center;
+  z-index: 2;
+  padding: 20px;
+}
+
+/* 💙 Corazones */
+.heart {
+  position: absolute;
+  top: -20px;
+  font-size: 20px;
+  animation: caer linear infinite;
+  pointer-events: none;
+}
+
+@keyframes caer {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
     opacity: 0;
-    animation: fade 3s infinite;
   }
+}
 
-  @keyframes fade {
-    0%   { opacity: 0; transform: scale(0.8); }
-    30%  { opacity: 1; transform: scale(1.1); }
-    60%  { opacity: 1; transform: scale(1); }
-    100% { opacity: 0; transform: scale(0.8); }
+/* 📱 Perfecto en celular */
+@media (max-width: 600px) {
+  #texto {
+    font-size: 2.2rem;
   }
+}
 </style>
 </head>
+
 <body>
 
-<h1 id="anim">TE AMO 🩵</h1>
+<div id="texto"></div>
+
+<script>
+/* ✍️ Efecto máquina de escribir */
+const mensaje = "TE AMO 🩵";
+let i = 0;
+const velocidad = 150;
+const texto = document.getElementById("texto");
+
+function escribir() {
+  if (i < mensaje.length) {
+    texto.innerHTML += mensaje.charAt(i);
+    i++;
+    setTimeout(escribir, velocidad);
+  } else {
+    setTimeout(() => {
+      texto.innerHTML = "";
+      i = 0;
+      escribir();
+    }, 2000);
+  }
+}
+
+escribir();
+
+/* 💙 Crear corazones azul claro */
+function crearCorazon() {
+  const corazon = document.createElement("div");
+  corazon.classList.add("heart");
+  corazon.innerHTML = "🩵";
+  corazon.style.left = Math.random() * 100 + "vw";
+  corazon.style.fontSize = Math.random() * 25 + 15 + "px";
+  corazon.style.animationDuration = Math.random() * 3 + 2 + "s";
+
+  document.body.appendChild(corazon);
+
+  setTimeout(() => {
+    corazon.remove();
+  }, 5000);
+}
+
+setInterval(crearCorazon, 120);
+</script>
 
 </body>
 </html>
